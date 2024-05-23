@@ -12,7 +12,7 @@ namespace WebApi
     {
 
         [Function("UpdateFoodItem")]
-        public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequest req, [FromBody] UpdateRequest model, int id)
+        public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "FoodItems/{id?}")] HttpRequest req, [FromBody] UpdateRequest model, int id)
         {
             logger.LogInformation("C# HTTP trigger function processed a request.");
             await foodItemService.Update(id, model);

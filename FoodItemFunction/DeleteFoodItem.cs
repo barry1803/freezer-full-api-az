@@ -10,10 +10,10 @@ namespace WebApi
     {
 
         [Function("DeleteFoodItem")]
-        public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete")] HttpRequest req, int Id)
+        public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "FoodItems/{id?}")] HttpRequest req, int id)
         {
             logger.LogInformation("C# HTTP trigger function processed a request.");
-            foodItemService.Delete(Id);
+            foodItemService.Delete(id);
             return new OkObjectResult("Food item deleted");
         }
     }

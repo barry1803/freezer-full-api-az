@@ -11,7 +11,7 @@ namespace WebApi
     public class CreateFoodItem(ILogger<GetFoodItem> logger, IFoodItemService foodItemService)
     {
         [Function("CreateFoodItem")]
-        public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req, [FromBody] CreateRequest model)
+        public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "FoodItems")] HttpRequest req, [FromBody] CreateRequest model)
         {
             logger.LogInformation("C# HTTP trigger function processed a request.");
             await foodItemService.Create(model);
