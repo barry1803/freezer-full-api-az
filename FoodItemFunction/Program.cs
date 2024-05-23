@@ -14,6 +14,7 @@ var host = new HostBuilder()
         // configure DI for application services
         services.AddScoped<IFoodItemService, FoodItemService>();
         services.AddScoped<IFoodItemRepository, FoodItemRepository>();
+
         services.AddScoped<DataContext>();
     })
     .Build();

@@ -12,11 +12,21 @@ public class DataContext(ILogger<FoodItemRepository> logger, IConfiguration conf
 {
     protected readonly IConfiguration Configuration = configuration;
 
+    private const string DevEnvValue = "Development";
+    private const string DbPath = "./Data/LocalDatabase.db";
+    private const string AzureDbPath = "D:/home/LocalDatabase.db";
+    private readonly bool _isDevEnv = Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") == DevEnvValue;
+
+    private static void CopyDb()
+    {
+        File.Copy(DbPath, AzureDbPath);
+        File.SetAttributes(AzureDbPath, FileAttributes.Normal);
+    }
+
     public IDbConnection CreateConnection()
     {
-        var connectionString = Configuration.GetConnectionString("CUSTOMCONNSTR_WebApiDatabase");
-        logger.LogInformation($"Connection string: {connectionString}");
-        return new SqliteConnection("Data Source = Data\\LocalDatabase.db");
+        if (!_isDevEnv && !File.Exists(AzureDbPath)) CopyDb();
+        return new SqliteConnection($"data source={(_isDevEnv ? DbPath : AzureDbPath)}");
     }
 
     public async Task Init()
