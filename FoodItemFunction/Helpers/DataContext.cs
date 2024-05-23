@@ -16,7 +16,7 @@ public class DataContext(ILogger<FoodItemRepository> logger, IConfiguration conf
     {
         var connectionString = Configuration.GetConnectionString("CUSTOMCONNSTR_WebApiDatabase");
         logger.LogInformation($"Connection string: {connectionString}");
-        return new SqliteConnection(Configuration.GetConnectionString("CUSTOMCONNSTR_WebApiDatabase"));
+        return new SqliteConnection("Data Source = Data\\LocalDatabase.db");
     }
 
     public async Task Init()
